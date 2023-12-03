@@ -1,24 +1,9 @@
-import fastify from 'fastify'
-import { knex } from './database'
+import { app } from './app'
 import { env } from './env'
-import { randomUUID } from 'node:crypto'
-
-const app = fastify()
-
-app.get('/hello', async () => {
-  const transactions = await knex('stransactions')
-    .insert({
-      id: crypto.randomUIID(),
-      title: 'transação de teste',
-      amount: 1000,
-    })
-    .returning('*')
-
-  return transactions
-})
 
 app
   .listen({
+    host: '0.0.0.0',
     port: env.PORT,
   })
   .then(() => {
